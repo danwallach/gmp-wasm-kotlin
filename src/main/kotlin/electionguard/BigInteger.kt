@@ -18,10 +18,7 @@ import org.khronos.webgl.set
  */
 suspend fun getGmpContext(): GmpContext {
     console.info("starting getGmpContext()")
-    //    js("console.trace()")  // oddly, not exported to Kotlin
-    val gmpP = js("eval('require')('gmp-wasm')") // is this really necessary?
-    console.info("getGmpContext: got package")
-    val gmpI = gmpP.init().unsafeCast<Promise<GMPLib>>().await()
+    val gmpI = gmpwasm.init().await()
     console.info("getGmpContext: got lib: keys(${Object.keys(gmpI.asJsObject())})")
     val gmp = gmpI.binding
     console.info("getGmpContext: got binding")
