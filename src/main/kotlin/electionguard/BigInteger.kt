@@ -19,6 +19,7 @@ import kotlin.js.Promise
  */
 suspend fun getGmpContext(): GmpContext {
     console.info("starting getGmpContext()")
+//    js("console.trace()")  // oddly, not exported to Kotlin
     val gmpP = js("eval('require')('gmp-wasm')") // is this really necessary?
     console.info("getGmpContext: got package")
     val gmpI = gmpP.init().unsafeCast<Promise<GMPLib>>().await()
@@ -37,12 +38,14 @@ suspend fun getGmpContext(): GmpContext {
  */
 class GmpContext(val gmp: GMPInterface) {
     private val registry = FinalizationRegistry<mpz_ptr> {
+        console.info("freeing: $it")
         gmp.mpz_clear(it) // frees GnuMP internal memory
         gmp.mpz_t_free(it) // frees the mpz_t wrapper
     }
 
     /** Helper function: allocates an `mpz` and initializes it to zero. */
     internal fun newEmpty(): mpz_ptr {
+        console.info("newEmpty")
         val tmp = gmp.mpz_t()
         gmp.mpz_init(tmp)
         return tmp
@@ -60,13 +63,15 @@ class GmpContext(val gmp: GMPInterface) {
 
     /** Converts the given small, positive number to a BigInteger. */
     fun numberToBigInteger(i: Number): BigInteger {
+        console.info("loading number: $i")
         val iInt = i.toInt()
         if (iInt < 0) {
             throw IllegalArgumentException("only non-negative numbers are supported")
         }
 
-        val bytes = ByteArray(4) { ((iInt shr (8 * (3 - it))) and 0xff).toByte() }
-        return byteArrayToBigInteger(bytes)
+        val result = byteArrayToBigInteger(iInt.toUInt().toByteArray())
+        console.info("numberToBigInteger complete")
+        return result
     }
 
     /** Converts the given big-endian byte array representation to a BigInteger. */
@@ -74,13 +79,22 @@ class GmpContext(val gmp: GMPInterface) {
 
     /** Converts the given big-endian byte array representation to a BigInteger. */
     fun bytesToBigInteger(byteArray: Uint8Array): BigInteger {
-        val result: mpz_ptr = gmp.mpz_t()
+        console.info("converting ${byteArray.length} bytes to a BigInteger")
+        val m: mpz_ptr = gmp.mpz_t()
+        console.info("-- mpz_t")
 
         val wasmBuf = gmp.malloc(byteArray.length)
+        console.info("-- malloc")
         gmp.mem.set(byteArray, offset = wasmBuf as Int)
-        gmp.mpz_import(result, byteArray.length, 1, 1, 1, 0, wasmBuf)
+        console.info("-- mem.set")
+        gmp.mpz_import(m, byteArray.length, 1, 1, 1, 0, wasmBuf)
+        console.info("-- mpz_import")
         gmp.free(wasmBuf)
-        return wrap(result)
+        console.info("-- free")
+        val result = wrap(m)
+
+        console.info("bytesToBigInteger complete")
+        return result
     }
 }
 

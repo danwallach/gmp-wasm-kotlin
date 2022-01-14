@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-RC3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
 
     // Fast, WASM port of GMP for big integers
     implementation(npm("gmp-wasm", "0.9.4"))
@@ -36,10 +36,10 @@ dependencies {
     testImplementation(kotlin("test-annotations-common", "1.6.10"))
 
     // runTest() for running suspend functions in tests
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
 
     // Fancy property-based testing
-    testImplementation("io.kotest:kotest-property:5.0.1")
+    testImplementation("io.kotest:kotest-property:5.0.3")
 }
 
 kotlin {
@@ -67,4 +67,20 @@ kotlin {
             }
         }
     }
+
+    sourceSets {
+        all { languageSettings.optIn("kotlin.RequiresOptIn") }
+    }
 }
+
+tasks.withType<Test> { testLogging { showStandardStreams = true } }
+
+// Hack to get us a newer version of NodeJs than the default of 14.17.0
+rootProject.plugins
+    .withType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin::class.java) {
+        rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>()
+            .download = true
+        rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>()
+            .nodeVersion = "16.13.1"
+    }
+
