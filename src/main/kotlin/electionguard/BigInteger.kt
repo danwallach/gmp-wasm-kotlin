@@ -4,22 +4,21 @@ import FinalizationRegistry
 import gmpwasm.GMPInterface
 import gmpwasm.GMPLib
 import gmpwasm.mpz_ptr
+import kotlin.js.Promise
 import kotlinext.js.Object
 import kotlinext.js.asJsObject
 import kotlinx.coroutines.await
 import org.khronos.webgl.Uint8Array
 import org.khronos.webgl.get
 import org.khronos.webgl.set
-import kotlin.js.Promise
 
 /**
- * Call first. Returns the `GmpContext` instance which has everything
- * needed for the computation. Suspending because the internals require
- * working around JavaScript promises.
+ * Call first. Returns the `GmpContext` instance which has everything needed for the computation.
+ * Suspending because the internals require working around JavaScript promises.
  */
 suspend fun getGmpContext(): GmpContext {
     console.info("starting getGmpContext()")
-//    js("console.trace()")  // oddly, not exported to Kotlin
+    //    js("console.trace()")  // oddly, not exported to Kotlin
     val gmpP = js("eval('require')('gmp-wasm')") // is this really necessary?
     console.info("getGmpContext: got package")
     val gmpI = gmpP.init().unsafeCast<Promise<GMPLib>>().await()
@@ -30,18 +29,18 @@ suspend fun getGmpContext(): GmpContext {
 }
 
 /**
- * This class wraps the `GMPInterface` provided by `gmp-wasm` and gives us a
- * simple BigInteger abstraction that efficiently uses the underlying WASM
- * implementation, and leverages the latest JavaScript "finalization" features
- * to help us figure out when it's time to free the underlying `mpz_ptr` values
- * living in the WASM memory.
+ * This class wraps the `GMPInterface` provided by `gmp-wasm` and gives us a simple BigInteger
+ * abstraction that efficiently uses the underlying WASM implementation, and leverages the latest
+ * JavaScript "finalization" features to help us figure out when it's time to free the underlying
+ * `mpz_ptr` values living in the WASM memory.
  */
 class GmpContext(val gmp: GMPInterface) {
-    private val registry = FinalizationRegistry<mpz_ptr> {
-        console.info("freeing: $it")
-        gmp.mpz_clear(it) // frees GnuMP internal memory
-        gmp.mpz_t_free(it) // frees the mpz_t wrapper
-    }
+    private val registry =
+        FinalizationRegistry<mpz_ptr> {
+            console.info("freeing: $it")
+            gmp.mpz_clear(it) // frees GnuMP internal memory
+            gmp.mpz_t_free(it) // frees the mpz_t wrapper
+        }
 
     /** Helper function: allocates an `mpz` and initializes it to zero. */
     internal fun newEmpty(): mpz_ptr {
@@ -52,8 +51,8 @@ class GmpContext(val gmp: GMPInterface) {
     }
 
     /**
-     * Creates a BigInteger wrapper around the passed mpz_ptr, ensuring that
-     * when the wrapper becomes garbage, the contained mpz_ptr will be freed.
+     * Creates a BigInteger wrapper around the passed mpz_ptr, ensuring that when the wrapper
+     * becomes garbage, the contained mpz_ptr will be freed.
      */
     internal fun wrap(mpz: mpz_ptr): BigInteger {
         val result = BigInteger(mpz, this)
@@ -99,7 +98,7 @@ class GmpContext(val gmp: GMPInterface) {
 }
 
 /** A minimal BigInteger-style wrapper around GMP-Wasm. */
-class BigInteger(val mpz: mpz_ptr, val context: GmpContext): Comparable<BigInteger> {
+class BigInteger(val mpz: mpz_ptr, val context: GmpContext) : Comparable<BigInteger> {
     operator fun plus(other: BigInteger): BigInteger {
         val result = context.newEmpty()
         context.gmp.mpz_add(result, this.mpz, other.mpz)
@@ -181,7 +180,7 @@ class BigInteger(val mpz: mpz_ptr, val context: GmpContext): Comparable<BigInteg
         val strptr = context.gmp.mpz_get_str(0, 10, this.mpz)
         var offset = strptr as Int
         val strBytes = mutableListOf<Byte>()
-        while(context.gmp.mem[offset] != 0.toByte()) {
+        while (context.gmp.mem[offset] != 0.toByte()) {
             strBytes.add(context.gmp.mem[offset])
             offset++
         }
@@ -196,8 +195,9 @@ class BigInteger(val mpz: mpz_ptr, val context: GmpContext): Comparable<BigInteg
         return toString().hashCode()
     }
 
-    override fun equals(other: Any?) = when (other) {
-        is BigInteger -> this.compareTo(other) == 0
-        else -> false
-    }
+    override fun equals(other: Any?) =
+        when (other) {
+            is BigInteger -> this.compareTo(other) == 0
+            else -> false
+        }
 }

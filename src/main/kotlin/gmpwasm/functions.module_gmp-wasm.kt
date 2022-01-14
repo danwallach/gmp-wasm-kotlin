@@ -1,12 +1,17 @@
-@file:Suppress("INTERFACE_WITH_SUPERCLASS", "OVERRIDING_FINAL_MEMBER", "RETURN_TYPE_MISMATCH_ON_OVERRIDE", "CONFLICTING_OVERLOADS")
+@file:Suppress(
+    "INTERFACE_WITH_SUPERCLASS",
+    "OVERRIDING_FINAL_MEMBER",
+    "RETURN_TYPE_MISMATCH_ON_OVERRIDE",
+    "CONFLICTING_OVERLOADS"
+)
 @file:JsModule("gmp-wasm")
 @file:JsNonModule
 
 package gmpwasm
 
+import kotlin.js.Promise
 import org.khronos.webgl.DataView
 import org.khronos.webgl.Uint8Array
-import kotlin.js.Promise
 
 external enum class mpfr_rnd_t {
     MPFR_RNDN /* = 0 */,
@@ -41,7 +46,12 @@ external interface GMPInterface {
     var mem: Uint8Array
     var memView: DataView
     var gmp_randinit_default: (state: gmp_randstate_t) -> Unit
-    var gmp_randinit_lc_2exp: (state: gmp_randstate_t, a: mpz_srcptr, c: c_unsigned_long_int, m2exp: mp_bitcnt_t) -> Unit
+    var gmp_randinit_lc_2exp: (
+        state: gmp_randstate_t,
+        a: mpz_srcptr,
+        c: c_unsigned_long_int,
+        m2exp: mp_bitcnt_t
+    ) -> Unit
     var gmp_randinit_lc_2exp_size: (state: gmp_randstate_t, size: mp_bitcnt_t) -> c_int
     var gmp_randinit_mt: (state: gmp_randstate_t) -> Unit
     var gmp_randinit_set: (rop: gmp_randstate_t, op: __gmp_randstate_struct_ptr) -> Unit
@@ -66,7 +76,12 @@ external interface GMPInterface {
     var mpz_cdiv_q_2exp: (q: mpz_ptr, n: mpz_srcptr, b: mp_bitcnt_t) -> Unit
     var mpz_cdiv_q_ui: (q: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
     var mpz_cdiv_qr: (q: mpz_ptr, r: mpz_ptr, n: mpz_srcptr, d: mpz_srcptr) -> Unit
-    var mpz_cdiv_qr_ui: (q: mpz_ptr, r: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
+    var mpz_cdiv_qr_ui: (
+        q: mpz_ptr,
+        r: mpz_ptr,
+        n: mpz_srcptr,
+        d: c_unsigned_long_int
+    ) -> c_unsigned_long_int
     var mpz_cdiv_r: (r: mpz_ptr, n: mpz_srcptr, d: mpz_srcptr) -> Unit
     var mpz_cdiv_r_2exp: (r: mpz_ptr, n: mpz_srcptr, b: mp_bitcnt_t) -> Unit
     var mpz_cdiv_r_ui: (r: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
@@ -92,7 +107,15 @@ external interface GMPInterface {
     var mpz_divisible_ui_p: (n: mpz_srcptr, d: c_unsigned_long_int) -> c_int
     var mpz_divisible_2exp_p: (n: mpz_srcptr, b: mp_bitcnt_t) -> c_int
     var mpz_even_p: (op: mpz_srcptr) -> Unit
-    var mpz_export: (rop: c_void_ptr, countp: c_size_t_ptr, order: c_int, size: c_size_t, endian: c_int, nails: c_size_t, op: mpz_srcptr) -> c_void_ptr
+    var mpz_export: (
+        rop: c_void_ptr,
+        countp: c_size_t_ptr,
+        order: c_int,
+        size: c_size_t,
+        endian: c_int,
+        nails: c_size_t,
+        op: mpz_srcptr
+    ) -> c_void_ptr
     var mpz_fac_ui: (rop: mpz_ptr, n: c_unsigned_long_int) -> Unit
     var mpz_2fac_ui: (rop: mpz_ptr, n: c_unsigned_long_int) -> Unit
     var mpz_mfac_uiui: (rop: mpz_ptr, n: c_unsigned_long_int, m: c_unsigned_long_int) -> Unit
@@ -101,7 +124,12 @@ external interface GMPInterface {
     var mpz_fdiv_q_2exp: (q: mpz_ptr, n: mpz_srcptr, b: mp_bitcnt_t) -> Unit
     var mpz_fdiv_q_ui: (q: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
     var mpz_fdiv_qr: (q: mpz_ptr, r: mpz_ptr, n: mpz_srcptr, d: mpz_srcptr) -> Unit
-    var mpz_fdiv_qr_ui: (q: mpz_ptr, r: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
+    var mpz_fdiv_qr_ui: (
+        q: mpz_ptr,
+        r: mpz_ptr,
+        n: mpz_srcptr,
+        d: c_unsigned_long_int
+    ) -> c_unsigned_long_int
     var mpz_fdiv_r: (r: mpz_ptr, n: mpz_srcptr, d: mpz_srcptr) -> Unit
     var mpz_fdiv_r_2exp: (r: mpz_ptr, n: mpz_srcptr, b: mp_bitcnt_t) -> Unit
     var mpz_fdiv_r_ui: (r: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
@@ -124,7 +152,15 @@ external interface GMPInterface {
     var mpz_get_ui: (op: mpz_srcptr) -> c_unsigned_long_int
     var mpz_getlimbn: (op: mpz_srcptr, n: mp_size_t) -> mp_limb_t
     var mpz_hamdist: (op1: mpz_srcptr, op2: mpz_srcptr) -> mp_bitcnt_t
-    var mpz_import: (rop: mpz_ptr, count: c_size_t, order: c_int, size: c_size_t, endian: c_int, nails: c_size_t, op: c_void_ptr) -> Unit
+    var mpz_import: (
+        rop: mpz_ptr,
+        count: c_size_t,
+        order: c_int,
+        size: c_size_t,
+        endian: c_int,
+        nails: c_size_t,
+        op: c_void_ptr
+    ) -> Unit
     var mpz_init: (x: mpz_ptr) -> Unit
     var mpz_inits: (ptrs: mpz_ptr) -> Unit
     var mpz_init2: (x: mpz_ptr, n: mp_bitcnt_t) -> Unit
@@ -162,7 +198,12 @@ external interface GMPInterface {
     var mpz_pow_ui: (rop: mpz_ptr, base: mpz_srcptr, exp: c_unsigned_long_int) -> Unit
     var mpz_powm: (rop: mpz_ptr, base: mpz_srcptr, exp: mpz_srcptr, mod: mpz_srcptr) -> Unit
     var mpz_powm_sec: (rop: mpz_ptr, base: mpz_srcptr, exp: mpz_srcptr, mod: mpz_srcptr) -> Unit
-    var mpz_powm_ui: (rop: mpz_ptr, base: mpz_srcptr, exp: c_unsigned_long_int, mod: mpz_srcptr) -> Unit
+    var mpz_powm_ui: (
+        rop: mpz_ptr,
+        base: mpz_srcptr,
+        exp: c_unsigned_long_int,
+        mod: mpz_srcptr
+    ) -> Unit
     var mpz_probab_prime_p: (n: mpz_srcptr, reps: c_int) -> c_int
     var mpz_random: (rop: mpz_ptr, maxSize: mp_size_t) -> Unit
     var mpz_random2: (rop: mpz_ptr, maxSize: mp_size_t) -> Unit
@@ -196,7 +237,12 @@ external interface GMPInterface {
     var mpz_tdiv_q_2exp: (q: mpz_ptr, n: mpz_srcptr, b: mp_bitcnt_t) -> Unit
     var mpz_tdiv_q_ui: (q: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
     var mpz_tdiv_qr: (q: mpz_ptr, r: mpz_ptr, n: mpz_srcptr, d: mpz_srcptr) -> Unit
-    var mpz_tdiv_qr_ui: (q: mpz_ptr, r: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
+    var mpz_tdiv_qr_ui: (
+        q: mpz_ptr,
+        r: mpz_ptr,
+        n: mpz_srcptr,
+        d: c_unsigned_long_int
+    ) -> c_unsigned_long_int
     var mpz_tdiv_r: (r: mpz_ptr, n: mpz_srcptr, d: mpz_srcptr) -> Unit
     var mpz_tdiv_r_2exp: (r: mpz_ptr, n: mpz_srcptr, b: mp_bitcnt_t) -> Unit
     var mpz_tdiv_r_ui: (r: mpz_ptr, n: mpz_srcptr, d: c_unsigned_long_int) -> c_unsigned_long_int
@@ -300,7 +346,13 @@ external interface GMPInterface {
     var mpfr_clear: (x: mpfr_ptr) -> Unit
     var mpfr_clears: (ptrs: mpfr_ptr) -> Unit
     var mpfr_prec_round: (x: mpfr_ptr, prec: mpfr_prec_t, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_can_round: (b: mpfr_srcptr, err: mpfr_exp_t, rnd1: mpfr_rnd_t, rnd2: mpfr_rnd_t, prec: mpfr_prec_t) -> c_int
+    var mpfr_can_round: (
+        b: mpfr_srcptr,
+        err: mpfr_exp_t,
+        rnd1: mpfr_rnd_t,
+        rnd2: mpfr_rnd_t,
+        prec: mpfr_prec_t
+    ) -> c_int
     var mpfr_min_prec: (x: mpfr_srcptr) -> mpfr_prec_t
     var mpfr_get_exp: (x: mpfr_srcptr) -> mpfr_exp_t
     var mpfr_set_exp: (x: mpfr_ptr, e: mpfr_exp_t) -> c_int
@@ -317,8 +369,18 @@ external interface GMPInterface {
     var mpfr_set_zero: (x: mpfr_ptr, sign: c_int) -> Unit
     var mpfr_set_si: (rop: mpfr_ptr, op: c_signed_long_int, rnd: mpfr_rnd_t) -> c_int
     var mpfr_set_ui: (rop: mpfr_ptr, op: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_set_si_2exp: (rop: mpfr_ptr, op: c_signed_long_int, e: mpfr_exp_t, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_set_ui_2exp: (rop: mpfr_ptr, op: c_unsigned_long_int, e: mpfr_exp_t, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_set_si_2exp: (
+        rop: mpfr_ptr,
+        op: c_signed_long_int,
+        e: mpfr_exp_t,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_set_ui_2exp: (
+        rop: mpfr_ptr,
+        op: c_unsigned_long_int,
+        e: mpfr_exp_t,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_set_q: (rop: mpfr_ptr, op: mpq_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_mul_q: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpq_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_div_q: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpq_srcptr, rnd: mpfr_rnd_t) -> c_int
@@ -347,7 +409,14 @@ external interface GMPInterface {
     var mpfr_get_si: (op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_signed_long_int
     var mpfr_get_ui: (op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_unsigned_long_int
     var mpfr_get_str_ndigits: (b: c_int, p: mpfr_prec_t) -> c_size_t
-    var mpfr_get_str: (str: c_str_ptr, expptr: mpfr_exp_t_ptr, base: c_int, n: c_size_t, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_str_ptr
+    var mpfr_get_str: (
+        str: c_str_ptr,
+        expptr: mpfr_exp_t_ptr,
+        base: c_int,
+        n: c_size_t,
+        op: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_str_ptr
     var mpfr_get_z: (rop: mpz_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_free_str: (str: c_str_ptr) -> Unit
     var mpfr_urandom: (rop: mpfr_ptr, state: gmp_randstate_t, rnd: mpfr_rnd_t) -> c_int
@@ -358,10 +427,30 @@ external interface GMPInterface {
     var mpfr_nextbelow: (x: mpfr_ptr) -> Unit
     var mpfr_nexttoward: (x: mpfr_ptr, y: mpfr_srcptr) -> Unit
     var mpfr_pow: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_pow_si: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_signed_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_pow_ui: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_ui_pow_ui: (rop: mpfr_ptr, op1: c_unsigned_long_int, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_ui_pow: (rop: mpfr_ptr, op1: c_unsigned_long_int, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_pow_si: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_signed_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_pow_ui: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_ui_pow_ui: (
+        rop: mpfr_ptr,
+        op1: c_unsigned_long_int,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_ui_pow: (
+        rop: mpfr_ptr,
+        op1: c_unsigned_long_int,
+        op2: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_pow_z: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpz_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_sqrt: (rop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_sqrt_ui: (rop: mpfr_ptr, op: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
@@ -370,18 +459,78 @@ external interface GMPInterface {
     var mpfr_sub: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_mul: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_div: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_add_ui: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_sub_ui: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_ui_sub: (rop: mpfr_ptr, op1: c_unsigned_long_int, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_mul_ui: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_div_ui: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_ui_div: (rop: mpfr_ptr, op1: c_unsigned_long_int, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_add_si: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_signed_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_sub_si: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_signed_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_si_sub: (rop: mpfr_ptr, op1: c_signed_long_int, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_mul_si: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_signed_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_div_si: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_signed_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_si_div: (rop: mpfr_ptr, op1: c_signed_long_int, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_add_ui: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_sub_ui: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_ui_sub: (
+        rop: mpfr_ptr,
+        op1: c_unsigned_long_int,
+        op2: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_mul_ui: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_div_ui: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_ui_div: (
+        rop: mpfr_ptr,
+        op1: c_unsigned_long_int,
+        op2: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_add_si: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_signed_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_sub_si: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_signed_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_si_sub: (
+        rop: mpfr_ptr,
+        op1: c_signed_long_int,
+        op2: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_mul_si: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_signed_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_div_si: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_signed_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_si_div: (
+        rop: mpfr_ptr,
+        op1: c_signed_long_int,
+        op2: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_add_d: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_double, rnd: mpfr_rnd_t) -> c_int
     var mpfr_sub_d: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_double, rnd: mpfr_rnd_t) -> c_int
     var mpfr_d_sub: (rop: mpfr_ptr, op1: c_double, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
@@ -416,12 +565,42 @@ external interface GMPInterface {
     var mpfr_reldiff: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> Unit
     var mpfr_eq: (op1: mpfr_srcptr, op2: mpfr_srcptr, op3: c_unsigned_long_int) -> c_int
     var mpfr_sgn: (op: mpfr_srcptr) -> c_int
-    var mpfr_mul_2exp: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_div_2exp: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_mul_2ui: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_div_2ui: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_mul_2si: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_signed_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_div_2si: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: c_signed_long_int, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_mul_2exp: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_div_2exp: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_mul_2ui: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_div_2ui: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_mul_2si: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_signed_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_div_2si: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: c_signed_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_rint: (rop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_roundeven: (rop: mpfr_ptr, op: mpfr_srcptr) -> c_int
     var mpfr_round: (rop: mpfr_ptr, op: mpfr_srcptr) -> c_int
@@ -435,10 +614,22 @@ external interface GMPInterface {
     var mpfr_rint_floor: (rop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_frac: (rop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_modf: (rop: mpfr_ptr, fop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_remquo: (r: mpfr_ptr, q: c_long_ptr, x: mpfr_srcptr, y: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_remquo: (
+        r: mpfr_ptr,
+        q: c_long_ptr,
+        x: mpfr_srcptr,
+        y: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_remainder: (rop: mpfr_ptr, x: mpfr_srcptr, y: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_fmod: (rop: mpfr_ptr, x: mpfr_srcptr, y: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_fmodquo: (rop: mpfr_ptr, q: c_long_ptr, x: mpfr_srcptr, y: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_fmodquo: (
+        rop: mpfr_ptr,
+        q: c_long_ptr,
+        x: mpfr_srcptr,
+        y: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_fits_ulong_p: (op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_fits_slong_p: (op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_fits_uint_p: (op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
@@ -487,7 +678,12 @@ external interface GMPInterface {
     var mpfr_erf: (rop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_erfc: (rop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_cbrt: (rop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_rootn_ui: (rop: mpfr_ptr, op: mpfr_srcptr, k: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_rootn_ui: (
+        rop: mpfr_ptr,
+        op: mpfr_srcptr,
+        k: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_gamma: (rop: mpfr_ptr, op: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_gamma_inc: (rop: mpfr_ptr, op: mpfr_srcptr, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_beta: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
@@ -513,24 +709,73 @@ external interface GMPInterface {
     var mpfr_sub_z: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpz_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_z_sub: (rop: mpfr_ptr, op1: mpz_srcptr, op2: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
     var mpfr_cmp_z: (op1: mpfr_srcptr, op2: mpz_srcptr) -> c_int
-    var mpfr_fma: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, op3: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_fms: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, op3: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_fmma: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, op3: mpfr_srcptr, op4: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_fmms: (rop: mpfr_ptr, op1: mpfr_srcptr, op2: mpfr_srcptr, op3: mpfr_srcptr, op4: mpfr_srcptr, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_sum: (rop: mpfr_ptr, tab: mpfr_ptr_ptr, n: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_dot: (rop: mpfr_ptr, a: mpfr_ptr_ptr, b: mpfr_ptr_ptr, n: c_unsigned_long_int, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_fma: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: mpfr_srcptr,
+        op3: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_fms: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: mpfr_srcptr,
+        op3: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_fmma: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: mpfr_srcptr,
+        op3: mpfr_srcptr,
+        op4: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_fmms: (
+        rop: mpfr_ptr,
+        op1: mpfr_srcptr,
+        op2: mpfr_srcptr,
+        op3: mpfr_srcptr,
+        op4: mpfr_srcptr,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_sum: (
+        rop: mpfr_ptr,
+        tab: mpfr_ptr_ptr,
+        n: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
+    var mpfr_dot: (
+        rop: mpfr_ptr,
+        a: mpfr_ptr_ptr,
+        b: mpfr_ptr_ptr,
+        n: c_unsigned_long_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_free_cache: () -> Unit
     var mpfr_free_cache2: (way: mpfr_free_cache_t) -> Unit
     var mpfr_free_pool: () -> Unit
     var mpfr_mp_memory_cleanup: () -> c_int
     var mpfr_subnormalize: (x: mpfr_ptr, t: c_int, rnd: mpfr_rnd_t) -> c_int
-    var mpfr_strtofr: (rop: mpfr_ptr, nptr: c_str_ptr, endptr: c_str_ptr_ptr, base: c_int, rnd: mpfr_rnd_t) -> c_int
+    var mpfr_strtofr: (
+        rop: mpfr_ptr,
+        nptr: c_str_ptr,
+        endptr: c_str_ptr_ptr,
+        base: c_int,
+        rnd: mpfr_rnd_t
+    ) -> c_int
     var mpfr_custom_get_size: (prec: mpfr_prec_t) -> c_size_t
     var mpfr_custom_init: (significand: c_void_ptr, prec: mpfr_prec_t) -> Unit
     var mpfr_custom_get_significand: (x: mpfr_srcptr) -> c_void_ptr
     var mpfr_custom_get_exp: (x: mpfr_srcptr) -> mpfr_exp_t
     var mpfr_custom_move: (x: mpfr_ptr, new_position: c_void_ptr) -> Unit
-    var mpfr_custom_init_set: (x: mpfr_ptr, kind: c_int, exp: mpfr_exp_t, prec: mpfr_prec_t, significand: c_void_ptr) -> Unit
+    var mpfr_custom_init_set: (
+        x: mpfr_ptr,
+        kind: c_int,
+        exp: mpfr_exp_t,
+        prec: mpfr_prec_t,
+        significand: c_void_ptr
+    ) -> Unit
     var mpfr_custom_get_kind: (x: mpfr_srcptr) -> c_int
     var mpfr_total_order_p: (x: mpfr_srcptr, y: mpfr_srcptr) -> c_int
 }

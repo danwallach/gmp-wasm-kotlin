@@ -7,6 +7,10 @@ buildscript {
 
 plugins {
     kotlin("js") version "1.6.10"
+
+    // https://github.com/hovinen/kotlin-auto-formatter
+    // Creates a `formatKotlin` Gradle action that seems to be reliable.
+    id("tech.formatter-kt.formatter") version "0.7.9"
 }
 
 group = "gmp-wasm-kotlin"
@@ -68,9 +72,7 @@ kotlin {
         }
     }
 
-    sourceSets {
-        all { languageSettings.optIn("kotlin.RequiresOptIn") }
-    }
+    sourceSets { all { languageSettings.optIn("kotlin.RequiresOptIn") } }
 }
 
 tasks.withType<Test> { testLogging { showStandardStreams = true } }
@@ -83,4 +85,3 @@ rootProject.plugins
         rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>()
             .nodeVersion = "16.13.1"
     }
-
