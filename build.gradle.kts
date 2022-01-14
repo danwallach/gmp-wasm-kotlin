@@ -18,8 +18,6 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-RC3")
 
@@ -33,10 +31,18 @@ dependencies {
     implementation("io.ktor:ktor-utils:1.6.7")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-extensions:1.0.1-pre.290-kotlin-1.6.10")
 
+    // Unit testing support
+    testImplementation(kotlin("test-js", "1.6.10"))
+    testImplementation(kotlin("test-annotations-common", "1.6.10"))
+
+    // runTest() for running suspend functions in tests
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC3")
+
+    // Fancy property-based testing
+    testImplementation("io.kotest:kotest-property:5.0.1")
 }
 
 kotlin {
-    // the "IR" backend seem flakier, so we're sticking with "LEGACY" for now
     js(LEGACY) {
         moduleName = "electionguard"
 
